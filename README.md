@@ -18,6 +18,8 @@
 
 9. Реализовать категории рецептов.
 
-Проект выполнялся с помощью Java script с использованием Node.js 
+Проект выполнялся с помощью Java script с использованием Node.js
 Базой данных послужила SQlite с использованием Prisma ORM
-     ![ab67616d0000b273ae450aff0df93bd5429ba836](https://github.com/user-attachments/assets/aede3b26-dc1f-4d3e-b805-cfd2042d84ae)
+
+
+![ab67616d0000b273ae450aff0df93bd5429ba836](https://github.com/user-attachments/assets/aede3b26-dc1f-4d3e-b805-cfd2042d84ae)
