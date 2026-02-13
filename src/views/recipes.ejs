@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Мои Кулинарные Записи</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="page">
+    <h1>📖 Мои Кулинарные Записи</h1>
+
+    <% if (recipes && recipes.length === 0) { %>
+      <p style="text-align: center; color: #7a6f5f; font-style: italic;">
+        Пока что здесь пусто... Создай свой первый рецепт!
+      </p>
+    <% } else if (recipes) { %>
+      <div class="recipe-list">
+        <% recipes.forEach(recipe => { %>
+          <div class="recipe-card">
+            <div class="recipe-title"><%= recipe.title %></div>
+              <div class="recipe-meta">
+                Автор: <%= recipe.author?.username || 'Аноним' %> • 
+                Категория: <%= recipe.category?.name || 'Без категории' %> •
+                Сложность: 
+                <% if (recipe.difficulty === 'easy') { %>
+                  🕊️ Легко
+                <% } else if (recipe.difficulty === 'medium') { %>
+                  🕯️ Средне
+                <% } else { %>
+                  ⚗️ Сложно
+                <% } %>
+              </div>
+            <div class="recipe-content"><%= recipe.content %></div>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+
+    <a href="/recipes/create" style="display: block; text-align: center; margin-top: 2rem;">
+      <button>+ Новая запись</button>
+    </a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Регистрация</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="page">
+    <h1>✒️ Регистрация</h1>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div style="
+        background: #fff8f0;
+        border-left: 4px solid #a54d3b;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        color: #8a3f2f;
+        font-style: italic;
+        border-radius: 4px;
+      ">
+        <%= error %>
+      </div>
+    <% } %>
+
+    <form method="POST">
+      <input 
+        name="username" 
+        placeholder="Имя пользователя" 
+        required 
+        value="<%= typeof username !== 'undefined' ? username : '' %>"
+      />
+      <input 
+        name="password" 
+        type="password" 
+        placeholder="Пароль" 
+        required 
+      />
+      <button>Зарегистрироваться</button>
+    </form>
+
+    <a href="/auth/login" class="back-link">← Уже есть аккаунт? Войти</a>
+  </div>
+</body>
+</html>

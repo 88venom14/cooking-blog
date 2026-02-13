@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Создать рецепт</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="page">
+    <h1>📝 Новая страница рецепта</h1>
+
+    <form method="POST">
+      <input name="title" placeholder="Название блюда" required style="width:100%; padding:0.8rem;" />
+      
+      <textarea name="content" placeholder="Описание, ингредиенты, шаги..." 
+                required style="width:100%; min-height:120px; padding:0.8rem; margin:0.5rem 0;"></textarea>
+
+      <div style="display:flex; gap:1rem; margin:1rem 0;">
+        <label>Сложность:
+          <select name="difficulty" required>
+            <option value="">— Выберите —</option>
+            <option value="easy">🕊️ Легко</option>
+            <option value="medium">🕯️ Средне</option>
+            <option value="hard">⚗️ Сложно</option>
+          </select>
+        </label>
+
+        <label>Категория:
+          <select name="categoryId" required>
+            <option disabled selected>— Выберите категорию —</option>
+            <% categories.forEach(cat => { %>
+              <option value="<%= cat.id %>"><%= cat.name %></option>
+            <% }) %>
+          </select>
+        </label>
+      </div>
+
+
+      <button type="submit" style="
+        background: #a54d3b;
+        color: white;
+        border: none;
+        padding: 0.8rem 1.5rem;
+        font-weight: bold;
+        border-radius: 30px;
+        cursor: pointer;
+      ">Сохранить рецепт</button>
+    </form>
+
+    <a href="/recipes" class="back-link" style="display:block; margin-top:1.5rem;">← К списку рецептов</a>
+  </div>
+</body>
+</html>

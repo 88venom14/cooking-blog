@@ -1,0 +1,167 @@
+/* public/css/style.css */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+
+:root {
+  --paper-bg: #f8f3e6;
+  --ink-black: #2b221c;
+  --accent-red: #a54d3b;
+  --accent-gold: #c9a972;
+  --shadow-paper: rgba(0, 0, 0, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #e8e0d0;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(165, 77, 59, 0.03) 0%, transparent 20%),
+    radial-gradient(circle at 90% 80%, rgba(201, 169, 114, 0.03) 0%, transparent 20%);
+  font-family: 'Playfair Display', serif;
+  color: var(--ink-black);
+  line-height: 1.6;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.page {
+  max-width: 800px;
+  margin: 0 auto;
+  background: var(--paper-bg);
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px var(--shadow-paper);
+  position: relative;
+  border: 1px solid #e0d8c5;
+}
+
+.page::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0L100 100M100 0L0 100' stroke='%23e0d8c5' stroke-width='0.5'/%3E%3C/svg%3E");
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+h1, h2 {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--accent-red);
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+input, textarea, select, button {
+  padding: 0.8rem 1rem;
+  border: 1px solid #c8bda0;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.6);
+  font-family: inherit;
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 0 3px rgba(201, 169, 114, 0.3);
+}
+
+button {
+  background: var(--accent-red);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  align-self: center;
+  padding: 0.9rem 2rem;
+  border: none;
+  border-radius: 30px;
+  font-family: 'Caveat', cursive;
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  margin-top: 0.5rem;
+}
+
+button:hover {
+  background: #8a3f2f;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.difficulty-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-style: italic;
+  color: #5a5045;
+}
+
+.difficulty-icon {
+  font-size: 1.2rem;
+}
+
+.recipe-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.recipe-card {
+  padding: 1.5rem;
+  border-left: 4px solid var(--accent-gold);
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 8px;
+}
+
+.recipe-title {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: var(--accent-red);
+}
+
+.recipe-meta {
+  font-size: 0.95rem;
+  color: #6b5f52;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.recipe-content {
+  white-space: pre-wrap;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 2rem;
+  color: var(--accent-red);
+  text-decoration: none;
+  font-style: italic;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 1rem;
+  }
+  .page {
+    padding: 1.5rem;
+  }
+}
