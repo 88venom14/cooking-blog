@@ -21,6 +21,10 @@
 Проект выполнялся с помощью Java script с использованием Node.js.
 Базой данных послужила SQlite с использованием Prisma ORM.
 
+ссылка на презентацию: https://docs.google.com/presentation/d/1qTYVlv2ksSoYj9ol7Oua6awA6K15jKIG0sp8NWOGXIM/edit?usp=sharing
+
+ссылка на Figma: https://www.figma.com/site/8eIUkMAdfP95928IZO5J68/Untitled?node-id=0-1&t=Hu41GBgXmQ3y0OhZ-1
+
 ссылка на сайт: https://cooking-blog--kalendarr.replit.app/recipes
 
 
