@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>Редактировать профиль</title>
+</head>
+<body>
+  <div class="page">
+    <h1>✏️ Редактировать профиль</h1>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="error"><%= error %></div>
+    <% } %>
+
+    <form method="POST" enctype="multipart/form-data">
+      <label>Имя пользователя:
+        <input type="text" name="username" value="<%= user.username %>" required>
+      </label>
+
+      <label>Аватарка (jpg/png/gif/webp, до 3 МБ):
+        <input type="file" name="avatar" accept="image/*">
+        <% if (user.avatar) { %>
+          <div>Текущая: <img src="<%= user.avatar %>" alt="avatar" style="width:80px; height:80px; border-radius:50%; object-fit:cover;"></div>
+        <% } %>
+      </label>
+
+        <h3>Социальные сети</h3>
+
+        <label>Instagram:
+        <input type="url" name="instagram" value="<%= social.instagram || '' %>" placeholder="https://instagram.com/...">
+        </label>
+
+        <label>Vkontakte:
+        <input type="url" name="vk" value="<%= social.vk || '' %>" placeholder="https://vk.com/...">
+        </label>
+
+        <label>YouTube:
+        <input type="url" name="youtube" value="<%= social.youtube || '' %>" placeholder="https://youtube.com/@...">
+        </label>
+
+        <label>Telegram:
+        <input type="url" name="telegram" value="<%= social.telegram || '' %>" placeholder="https://t.me/...">
+        </label>
+
+      <button type="submit">Сохранить изменения</button>
+    </form>
+
+    <a href="/profile">← Назад в профиль</a>
+  </div>
+</body>
+</html>

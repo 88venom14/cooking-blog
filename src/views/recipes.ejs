@@ -3,43 +3,97 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Мои Кулинарные Записи</title>
+  <title>Кулинарный блог</title>
   <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
-  <div class="page">
-    <h1>📖 Мои Кулинарные Записи</h1>
+  <%- include('partials/header', { currentPage: currentPage }) %>
 
-    <% if (recipes && recipes.length === 0) { %>
-      <p style="text-align: center; color: #7a6f5f; font-style: italic;">
+  <div class="page">
+    <h1><%= pageTitle || "Все рецепты" %></h1>
+
+
+    <form method="GET" action="<%= basePath || '/recipes' %>" class="filter-bar">
+
+
+      <select name="difficulty">
+        <option value="">--Сложность--</option>
+        <option value="easy" <%= currentDifficulty === 'easy' ? 'selected' : '' %>>Простые</option>
+        <option value="medium" <%= currentDifficulty === 'medium' ? 'selected' : '' %>>Средние</option>
+        <option value="hard" <%= currentDifficulty === 'hard' ? 'selected' : '' %>>Сложные</option>
+      </select>
+
+      <select name="category">
+        <option value="">--Категория--</option>
+        <% categories.forEach(cat => { %>
+          <option value="<%= cat.id %>" 
+            <%= currentCategory == cat.id ? 'selected' : '' %>>
+            <%= cat.name %>
+          </option>
+        <% }) %>
+      </select>
+
+      <button type="submit">Фильтр</button>
+
+    </form>
+
+
+
+
+
+    <% if (currentPage === 'all') { %>
+      <div class="sort-controls">
+        <a href="/recipes?sort=date" class="sort-btn <%= currentSort === 'date' ? 'active' : '' %>">
+          По дате
+        </a>
+        <a href="/recipes?sort=likes" class="sort-btn <%= currentSort === 'likes' ? 'active' : '' %>">
+          По лайкам
+        </a>
+      </div>
+    <% } %>
+
+    <% if (!recipes || recipes.length === 0) { %>
+      <p style="text-align: center; color: #7a6f5f; font-style: italic; margin: 3rem 0;">
         Пока что здесь пусто... Создай свой первый рецепт!
       </p>
-    <% } else if (recipes) { %>
-      <div class="recipe-list">
+    <% } else { %>
+      <div class="recipes-grid">
         <% recipes.forEach(recipe => { %>
           <div class="recipe-card">
-            <div class="recipe-title"><%= recipe.title %></div>
-              <div class="recipe-meta">
-                Автор: <%= recipe.author?.username || 'Аноним' %> • 
-                Категория: <%= recipe.category?.name || 'Без категории' %> •
-                Сложность: 
-                <% if (recipe.difficulty === 'easy') { %>
-                  🕊️ Легко
-                <% } else if (recipe.difficulty === 'medium') { %>
-                  🕯️ Средне
-                <% } else { %>
-                  ⚗️ Сложно
-                <% } %>
-              </div>
-            <div class="recipe-content"><%= recipe.content %></div>
+            <% if (recipe.imageUrl) { %>
+              <img src="<%= recipe.imageUrl %>" alt="<%= recipe.title %>" class="recipe-image">
+            <% } else { %>
+              <div class="recipe-image-placeholder"></div>
+            <% } %>
+
+            <div class="recipe-title">
+              <a href="/recipes/<%= recipe.id %>">
+                <%= recipe.title %>
+              </a>
+            </div>
+
+            <div class="recipe-meta">
+              Автор: <%= recipe.author?.username || 'Аноним' %> • 
+              Категория: <%= recipe.category?.name || 'Без категории' %> • 
+              Сложность: 
+              <% if (recipe.difficulty === 'easy') { %>🕊️ Легко<% } %>
+              <% if (recipe.difficulty === 'medium') { %>🕯️ Средне<% } %>
+              <% if (recipe.difficulty === 'hard') { %>⚗️ Сложно<% } %>
+            </div>
+
+            <div class="recipe-content">
+              <%= recipe.content.substring(0, 150) %>...
+            </div>
           </div>
         <% }) %>
       </div>
     <% } %>
 
-    <a href="/recipes/create" style="display: block; text-align: center; margin-top: 2rem;">
-      <button>+ Новая запись</button>
-    </a>
+    <div style="text-align: center; margin: 3rem 0;">
+      <a href="/recipes/create">
+        <button class="new-recipe-button">+ Новая запись</button>
+      </a>
+    </div>
   </div>
 </body>
 </html>

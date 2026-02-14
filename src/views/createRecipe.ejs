@@ -10,11 +10,17 @@
   <div class="page">
     <h1>📝 Новая страница рецепта</h1>
 
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
       <input name="title" placeholder="Название блюда" required style="width:100%; padding:0.8rem;" />
-      
+    
       <textarea name="content" placeholder="Описание, ингредиенты, шаги..." 
                 required style="width:100%; min-height:120px; padding:0.8rem; margin:0.5rem 0;"></textarea>
+      
+      <div>
+        <label>Изображение блюда (jpg/png/gif/webp, до 5 МБ):
+          <input type="file" name="image" accept="image/*">
+        </label>
+      </div>
 
       <div style="display:flex; gap:1rem; margin:1rem 0;">
         <label>Сложность:

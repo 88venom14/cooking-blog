@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>Профиль</title>
+</head>
+<body>
+    <div class="page">
+      <h1>👤 Профиль пользователя</h1>
+        <h2><%= user.username %></h2>
+
+      <div class="profile-card">
+        <div class="profile-header">
+          <% if (user.avatar) { %>
+            <img src="<%= user.avatar %>" alt="Аватар" class="avatar-large">
+          <% } else { %>
+            <div class="avatar-placeholder">👤</div>
+          <% } %>
+        </div>
+
+        <% if (isOwner) { %>
+          <div class="edit-button">
+            <a href="/profile/edit" class="btn">Редактировать профиль</a>
+          </div>
+        <% } %>
+
+        <div class="profile-section">
+          <h3>Социальные сети</h3>
+          <div class="social-links">
+            <% if (social.instagram) { %>
+              <a href="<%= social.instagram %>" target="_blank" rel="noopener noreferrer" class="social-link instagram">
+                Instagram
+              </a>
+            <% } %>
+
+            <% if (social.vk) { %>
+              <a href="<%= social.vk %>" target="_blank" rel="noopener noreferrer" class="social-link vk">
+                VK
+              </a>
+            <% } %>
+
+            <% if (social.youtube) { %>
+              <a href="<%= social.youtube %>" target="_blank" rel="noopener noreferrer" class="social-link youtube">
+                YouTube
+              </a>
+            <% } %>
+
+            <% if (social.telegram) { %>
+              <a href="<%= social.telegram %>" target="_blank" rel="noopener noreferrer" class="social-link telegram">
+                Telegram
+              </a>
+            <% } %>
+
+            <% if (!social.instagram && !social.vk && !social.youtube && !social.telegram) { %>
+              <p>Соцсети не указаны</p>
+            <% } %>
+          </div>
+        </div>
+
+        <div class="profile-section">
+          <h3>Рецепты пользователя</h3>
+
+          <% if (user.recipes && user.recipes.length > 0) { %>
+            <div class="user-recipes-grid">
+              <% user.recipes.forEach(recipe => { %>
+                <a href="/recipes/<%= recipe.id %>" class="recipe-card">
+                  <div class="recipe-card-content">
+                    <h4 class="recipe-title"><%= recipe.title %></h4>
+                    <% if (recipe.createdAt) { %>
+                      <span class="recipe-date">
+                        <%= new Date(recipe.createdAt).toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' }) %>
+                      </span>
+                    <% } %>
+                  </div>
+                </a>
+              <% }) %>
+            </div>
+          <% } else { %>
+            <p class="no-content">Пока нет рецептов</p>
+          <% } %>
+        </div>
+      </div>
+
+      <a href="/recipes" class="back-link">← Назад к рецептам</a>
+    </div>
+</body>
+</html>

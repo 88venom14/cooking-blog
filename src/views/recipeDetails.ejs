@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <title><%= recipe.title %></title>
+</head>
+<body>
+  <div class="page">
+
+    <h1><%= recipe.title %></h1>
+
+    <p>
+      Автор:
+      <% if (recipe.author) { %>
+        <a href="/profile/<%= recipe.author.id %>">
+          <%= recipe.author.username %>
+        </a>
+      <% } else { %>
+        Аноним
+      <% } %>
+    </p>
+
+    <p>Категория: <%= recipe.category.name %></p>
+    <p>Сложность: <%= recipe.difficulty %></p>
+
+    <hr>
+      <% if (recipe.imageUrl) { %>
+        <img src="<%= recipe.imageUrl %>" alt="<%= recipe.title %>" class="detail-image">
+      <% } %>
+
+    <p><%= recipe.content %></p>
+
+    <hr>
+      <div class="reactions">
+        <form method="POST" action="/recipes/<%= recipe.id %>/react" class="reaction-form">
+          <button type="submit" name="type" value="like" 
+                  class="reaction-btn <%= userReactionType === 'like' ? 'active' : '' %>">
+            👍 <span class="count"><%= reactionCounts.like %></span>
+          </button>
+        </form>
+
+        <form method="POST" action="/recipes/<%= recipe.id %>/react" class="reaction-form">
+          <button type="submit" name="type" value="heart" 
+                  class="reaction-btn <%= userReactionType === 'heart' ? 'active' : '' %>">
+            ❤️ <span class="count"><%= reactionCounts.heart %></span>
+          </button>
+        </form>
+
+        <form method="POST" action="/recipes/<%= recipe.id %>/react" class="reaction-form">
+          <button type="submit" name="type" value="fire" 
+                  class="reaction-btn <%= userReactionType === 'fire' ? 'active' : '' %>">
+            🔥 <span class="count"><%= reactionCounts.fire %></span>
+          </button>
+        </form>
+
+        <!-- Новые реакции -->
+        <form method="POST" action="/recipes/<%= recipe.id %>/react" class="reaction-form">
+          <button type="submit" name="type" value="dislike" 
+                  class="reaction-btn <%= userReactionType === 'dislike' ? 'active' : '' %>">
+            👎 <span class="count"><%= reactionCounts.dislike %></span>
+          </button>
+        </form>
+
+        <form method="POST" action="/recipes/<%= recipe.id %>/react" class="reaction-form">
+          <button type="submit" name="type" value="poop" 
+                  class="reaction-btn <%= userReactionType === 'poop' ? 'active' : '' %>">
+            💩 <span class="count"><%= reactionCounts.poop %></span>
+          </button>
+        </form>
+      </div>
+
+      <p class="total-reactions">
+        Всего реакций: <%= Object.values(reactionCounts).reduce((a, b) => a + b, 0) %>
+      </p>
+
+    <hr><h2>Комментарии</h2>
+
+    <% recipe.comments.forEach(comment => { %>
+      <div style="margin-bottom: 1rem;">
+        <strong>
+          <%= comment.isAnonymous ? "Аноним" : comment.author?.username %>
+        </strong>
+        <p><%= comment.text %></p>
+      </div>
+    <% }) %>
+
+    <hr>
+
+    <!-- Форма комментария -->
+    <% if (isAuthenticated) { %>  <!-- Изменено: if (isAuthenticated) -->
+      <form method="POST" action="/recipes/<%= recipe.id %>/comment">
+        <textarea name="text" required></textarea>
+
+        <label>
+          <input type="checkbox" name="anonymous" />
+          Оставить анонимно
+        </label>
+
+        <button type="submit">Отправить</button>
+      </form>
+    <% } else { %>
+      <p>Чтобы оставить комментарий, <a href="/auth/login">войдите в аккаунт</a>.</p>
+    <% } %>
+
+    <a href="/recipes">← Назад</a>
+
+  </div>
+  <!-- ВРЕМЕННАЯ ОТЛАДКА -->
+<p style="font-size:11px; color:#888; margin-top:30px;">
+  Отладка: isAuthenticated = <%= isAuthenticated %> | 
+  session.userId = <%= typeof req !== 'undefined' ? 'да' : 'нет' %>
+</p>
+</body>
+</html>

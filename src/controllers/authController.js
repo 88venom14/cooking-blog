@@ -1,4 +1,4 @@
-const prisma = require("../utils/prisma");
+const prisma = require("../prisma");
 const bcrypt = require("bcrypt");
 
 exports.showRegister = (req, res) => {
@@ -42,15 +42,25 @@ exports.login = async (req, res) => {
 
   const valid = await bcrypt.compare(password, user.password);
 
-  if (!valid) {
-    return res.render("login", {
-      error: "Неверный пароль. Попробуйте ещё раз.",
-      username: username // чтобы имя осталось в поле
+  if (valid) {
+    req.session.userId = user.id;
+    console.log("Установлен userId:", req.session.userId);  // ← должен быть 1 или другой id
+
+    req.session.save(err => {
+      if (err) {
+        console.error("Ошибка сохранения сессии:", err);
+        return res.status(500).send("Проблема с сессией");
+      }
+      console.log("Сессия сохранена успешно");
     });
   }
 
   req.session.userId = user.id;
-  res.redirect("/recipes");
+  console.log("После логина userId установлен:", req.session.userId);
+  req.session.save((err) => {
+    if (err) console.error("Ошибка сохранения сессии:", err);
+    res.redirect("/recipes");
+  });
 };
 
 exports.logout = (req, res) => {

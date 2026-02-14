@@ -1,0 +1,22 @@
+<nav class="header-nav">
+
+        <div class="header-left">
+        <% if (typeof isAuthenticated !== 'undefined' && isAuthenticated) { %>
+          <a href="/profile" class="profile-link">
+            <% if (user?.avatar) { %>
+              <img src="<%= user.avatar %>" alt="Аватар" class="avatar-small">
+            <% } else { %>
+              <span class="avatar-small-placeholder">👤</span>
+            <% } %>
+            <span><%= user?.username || 'Профиль' %></span>
+          </a>
+        <% } else { %>
+          <a href="/auth/login" class="nav-link">Войти</a>
+        <% } %>
+      </div>
+  
+  <a href="/recipes" class="nav-link <%= currentPage === 'all' ? 'active' : '' %>">Все рецепты</a>
+  <a href="/recipes/popular" class="nav-link <%= currentPage === 'popular' ? 'active' : '' %>">Популярные</a>
+  <a href="/recipes/month" class="nav-link <%= currentPage === 'month' ? 'active' : '' %>">За месяц</a>
+
+</nav>
