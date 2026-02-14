@@ -18,7 +18,7 @@ exports.showProfile = async (req, res) => {
   res.render("profile", {
     user,
     social,
-    isOwner: true, // для отображения кнопки "Редактировать"
+    isOwner: true,
     message: req.query.message || null
   });
 };
@@ -55,7 +55,6 @@ exports.updateProfile = async (req, res) => {
 
     updateData.social = JSON.stringify(socialData);
 
-  // Файл опционален
   if (req.file) {
     updateData.avatar = `/uploads/avatars/${req.file.filename}`;
   }

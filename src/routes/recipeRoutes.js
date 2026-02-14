@@ -4,7 +4,7 @@ const prisma = require("../prisma");
 const auth = require("../middleware/authMiddleware");
 const uploadRecipeImage = require("../middleware/uploadRecipeImage");
 
-router.get("/", async (req, res) => {  // ← добавь async
+router.get("/", async (req, res) => {
   let user = null;
   if (req.session.userId) {
     user = await prisma.user.findUnique({
@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {  // ← добавь async
     });
   }
 
-  recipeController.getAll(req, res, "all", {  // ← передаём доп. параметры
+  recipeController.getAll(req, res, "all", {
     isAuthenticated: !!req.session.userId,
     user
   });
@@ -76,7 +76,6 @@ router.get("/popular", async (req, res) => {
 });
 
 
-// За месяц
 router.get("/month", async (req, res) => {
   const { difficulty, category, sort } = req.query;
 
@@ -133,7 +132,6 @@ router.get("/month", async (req, res) => {
 });
 
 
-// По сложности
 router.get("/difficulty/:level", async (req, res) => {
   const level = req.params.level;
 
@@ -158,7 +156,6 @@ router.get("/difficulty/:level", async (req, res) => {
   });
 });
 
-// Детальная страница рецепта
 router.get("/:id", async (req, res) => {
   const recipe = await prisma.recipe.findUnique({
     where: { id: Number(req.params.id) },

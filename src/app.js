@@ -11,18 +11,17 @@ const app = express();
 const auth = require("./middleware/authMiddleware");
 const uploadAvatar = require("./middleware/uploadAvatar");
 const profileController = require("./controllers/profileController");
-//const upload = require('multer')();
 
 
 
 app.use(session({
-  secret: 'supersecret',           // поменяй на свой длинный секрет
+  secret: 'supersecret', 
   resave: false,
   saveUninitialized: false,
   cookie: { 
-    maxAge: 1000 * 60 * 60 * 24,   // 1 день
+    maxAge: 1000 * 60 * 60 * 24,
     httpOnly: true,
-    secure: false,                 // ← важно: false для localhost (http)
+    secure: false,
     sameSite: 'lax'
   }
 }));
@@ -63,7 +62,6 @@ app.get('/profile', async (req, res) => {
   });
 });
 
-// Чужой профиль (с id)
 app.get('/profile/:id', async (req, res) => {
   const id = Number(req.params.id);
   if (isNaN(id)) return res.status(400).send('Неверный ID');
@@ -131,20 +129,17 @@ app.post('/recipes/:id/react', async (req, res) => {
 
   const recipeId = Number(req.params.id);
   const userId = req.session.userId;
-  const { type } = req.body;                     // like / heart / fire
+  const { type } = req.body;  
 
-  // Ищем, есть ли уже такая реакция
   const existing = await prisma.reaction.findUnique({
     where: { userId_recipeId: { userId, recipeId } }
   });
 
   if (existing && existing.type === type) {
-    // Клик по той же кнопке → убираем реакцию
     await prisma.reaction.delete({
       where: { userId_recipeId: { userId, recipeId } }
     });
   } else {
-    // Меняем или ставим новую
     await prisma.reaction.upsert({
       where: { userId_recipeId: { userId, recipeId } },
       update: { type },

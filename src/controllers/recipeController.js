@@ -3,7 +3,6 @@ const prisma = require("../prisma");
 exports.getAll = async (req, res, currentPage = "all", extra = {}) => {
   const { sort, difficulty, category } = req.query;
 
-  // СОРТИРОВКА
   let order = {};
   if (sort === "likes") {
     order = { reactions: { _count: "desc" } };
@@ -11,7 +10,6 @@ exports.getAll = async (req, res, currentPage = "all", extra = {}) => {
     order = { createdAt: "desc" };
   }
 
-  // ФИЛЬТРЫ
   let where = {};
 
   if (difficulty) {
@@ -48,13 +46,11 @@ exports.getAll = async (req, res, currentPage = "all", extra = {}) => {
 };
 
 
-// ✅ Передаём категории
 exports.showCreate = async (req, res) => {
   const categories = await prisma.category.findMany();
   res.render("createRecipe", { categories });
 };
 
-// ✅ Создание рецепта с существующей категорией
 exports.create = async (req, res) => {
   const { title, content, difficulty, categoryId } = req.body;
 

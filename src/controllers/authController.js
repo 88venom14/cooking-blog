@@ -44,7 +44,7 @@ exports.login = async (req, res) => {
 
   if (valid) {
     req.session.userId = user.id;
-    console.log("Установлен userId:", req.session.userId);  // ← должен быть 1 или другой id
+    console.log("Установлен userId:", req.session.userId);
 
     req.session.save(err => {
       if (err) {
